@@ -28,8 +28,8 @@ jobs:
         run: gosec ./...
 
   style:
-    name: Styling
-    runs-on: ubuntu-latest
+    name: Style
+    runs-on: blacksmith-4vcpu-ubuntu-2204
 
     steps:
       - name: Checking out the code
