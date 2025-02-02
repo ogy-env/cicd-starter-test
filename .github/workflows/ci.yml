@@ -28,7 +28,7 @@ jobs:
         run: gosec ./...
 
   style:
-    name: Style
+    name: Styling
     runs-on: ubuntu-latest
 
     steps:
