@@ -7,7 +7,7 @@ on:
 jobs:
   tests:
     name: Tests
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2204
 
     steps:
       - name: Checking out the code
@@ -20,3 +20,31 @@ jobs:
 
       - name: Running tests
         run: go test -cover ./...
+
+      - name: Installing gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Running security checks
+        run: gosec ./...
+
+  style:
+    name: Styling
+    runs-on: blacksmith-4vcpu-ubuntu-2204
+
+    steps:
+      - name: Checking out the code
+        uses: actions/checkout@v4
+
+      - name: Setting up Golang
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23.0"
+
+      - name: Installing Statickcheck
+        run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - name: Checking formatting
+        run: test -z $(go fmt ./...)
+
+      - name: Checking linting
+        run: staticcheck ./...
